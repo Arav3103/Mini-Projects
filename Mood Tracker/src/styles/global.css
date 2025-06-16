@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
