@@ -1,21 +1,29 @@
-import { useState, type FC, type MouseEvent } from "react";
+import { useEffect, useState, type FC, type MouseEvent } from "react";
 import { moodList } from "../shared/shared.constants";
 import MoodDisplay from "./MoodDisplay";
+import MoodHistory from "./MoodHistory";
 
 export interface MoodType {
   name: string;
   timeStamp: string;
 }
 const MoodInput: FC = () => {
-  const [selectedMoodLst, setSelectedMoodLst] = useState<MoodType[]>([]);
+  const [selectedMoodLst, setSelectedMoodLst] = useState<MoodType[]>(() => {
+    const storedMoodList = localStorage.getItem("MoodList");
+    return storedMoodList ? JSON.parse(storedMoodList) : [];
+  });
   const [isMoodSelected, setIsMoodSelected] = useState<boolean>(false);
+  useEffect(() => {
+    localStorage.setItem("MoodList", JSON.stringify(selectedMoodLst));
+  }, [selectedMoodLst]);
+
   const handleMoodSelection = (event: MouseEvent<HTMLButtonElement>) => {
     if (!isMoodSelected) {
       setSelectedMoodLst([
         ...selectedMoodLst,
         {
           name: event.currentTarget.id,
-          timeStamp: new Date().toISOString().split("T")[0],
+          timeStamp: new Date().toISOString(),
         },
       ]);
       setIsMoodSelected(true);
@@ -45,10 +53,9 @@ const MoodInput: FC = () => {
         updateSelectedMoodList={setSelectedMoodLst}
         setIsMoodSelected={setIsMoodSelected}
       />
+      <MoodHistory selectedMoodList={selectedMoodLst} />
     </>
   );
 };
-
-
 
 export default MoodInput;

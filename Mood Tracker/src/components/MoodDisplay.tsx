@@ -14,12 +14,12 @@ const MoodDisplay = ({
 }: MoodDisplayProps) => {
   const currDate = new Date().toISOString().split("T")[0];
   const currMood = selectedMoodList.filter(
-    (item) => item.timeStamp === currDate
+    (item) => item.timeStamp.split("T")[0] === currDate
   );
 
   const handleReset = () => {
     selectedMoodList = selectedMoodList.filter(
-      (item) => item.timeStamp != currDate
+      (item) => item.timeStamp.split("T")[0] != currDate
     );
     updateSelectedMoodList(selectedMoodList);
     setIsMoodSelected(false);
