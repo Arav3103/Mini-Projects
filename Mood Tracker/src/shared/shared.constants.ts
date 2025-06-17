@@ -1,18 +1,18 @@
 export const moodList = [
   {
     name: "Happy",
-    emoji: "",
+    emoji: "😊",
   },
   {
     name: "Sad",
-    emoji: "",
+    emoji: "😔",
   },
   {
     name: "Angry",
-    emoji: "",
+    emoji: "😡",
   },
   {
     name: "Funny",
-    emoji: "",
+    emoji: "🤣",
   },
 ];
