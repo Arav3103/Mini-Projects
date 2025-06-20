@@ -1,18 +1,14 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, type SetStateAction } from "react";
 import RadioBtnGroup from "../shared/RadioBtnGroup";
+import type { PriorityLevel, Task } from "./TodoDashboard";
 
-interface Task {
-  id: number;
-  name: string;
-  isCompleted: boolean;
-  completedDateTime: string;
-  priority: PriorityLevel;
+interface ToDoInputProps {
+  setTaskList: React.Dispatch<SetStateAction<Task[]>>;
 }
-export type PriorityLevel = "Low" | "Medium" | "High";
 
-const ToDoInput = () => {
+const TodoInput = ({ setTaskList }: ToDoInputProps) => {
   const [task, setTask] = useState<string>("");
-  const [, setTaskList] = useState<Task[]>([]);
+
   const [priority, setPriority] = useState<PriorityLevel>("Low");
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     // console.log(e.currentTarget.value);
@@ -32,7 +28,11 @@ const ToDoInput = () => {
         },
       ]);
     }
-    setTask('');
+    setTask("");
+  };
+
+  const handleDeleteAll = () => {
+    setTaskList([]);
   };
 
   return (
@@ -51,14 +51,22 @@ const ToDoInput = () => {
         selectedValue={priority}
         selectorFn={setPriority}
       />
-      <button
-        onClick={handleAddTask}
-        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
-      >
-        Add
-      </button>
+      <div className="flex flex-row gap-x-5 items-center my-5">
+        <button
+          onClick={handleAddTask}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+        >
+          Add
+        </button>
+        <button
+          onClick={handleDeleteAll}
+          className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 transition-all duration-200"
+        >
+          Delete All
+        </button>
+      </div>
     </section>
   );
 };
 
-export default ToDoInput;
+export default TodoInput;
