@@ -1,6 +1,6 @@
 import type { ChangeEvent, SetStateAction } from "react";
 import { radioBtnList } from "../shared.constants";
-import type { PriorityLevel } from "../components/ToDoInput";
+import type { PriorityLevel } from "../components/TodoInput";
 
 interface RadioBtnGroupProps {
   groupName: string;
